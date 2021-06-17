@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+        <title>Meine Pflanzen</title>
+    </head>
+    <body>
+        <h1>Meine Pflanzen</h1>
+
+        {% for plant in plants_info %}
+        <div class="plant_div">
+            <table>
+                <tr>
+                    <td>Name:</td><td><input type="text" name="name" value="{{plant.name}}"></td>
+                    <td>Bewässerungs Häufigkeit:</td><td>{{plant.water_freq}}</td>
+                </tr>
+                <tr>
+                    <td>Typ:</td>
+                    <td><select name="type" style="width:100%">
+                        {% for type_option in type_select %}
+                        <option value="{{type_option}}" {{"selected" if plant.type==type_option}} >{{type_option}}</option>
+                        {% endfor %}
+                    </select></td>
+                    <td>Bewässerungs fällig in:</td><td style="color: {{plant.water_countdown_color}};">{{plant.water_countdown}}</td>
+                </tr>
+            </table>
+            <br>
+            <button type="button">Wurde bewässert!</button>
+            <button type="button">Pflanze löschen</button>
+        </div>
+        {% endfor %}
+        <button type="button">Pflanze hinzufügen</button>
+
+    </body>
+</html>

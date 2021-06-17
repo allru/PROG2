@@ -1,0 +1,33 @@
+{
+	"0": {
+		"name": "Zierspargel",
+		"water_freq": 1},
+	"1": {
+		"name": "Tunichgunde", 
+		"water_freq": 7},
+	"2": {
+		"name": "Narzisse", 
+		"water_freq": 3},
+	"3": {
+		"name": "Qumquat", 
+		"water_freq": 1},
+	"4": {
+		"name": "Wunderbaum", 
+		"water_freq": 7},
+	"5": {
+		"name": "Tulpe", 
+		"water_freq": 3},
+	"6": {
+		"name": "Brotpflanze", 
+		"water_freq": 1},
+	"7": {
+		"name": "Bad-Nelke", 
+		"water_freq": 7},
+	"8": {
+		"name": "Seerose", 
+		"water_freq": 3},
+	"9": {
+		"name": "Bananenbaum", 
+		"water_freq": 1}
+
+}
