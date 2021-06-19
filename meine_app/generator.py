@@ -1,8 +1,9 @@
 import time
+import re
 
 """
 Generieren der plant-info, die in HTML genutzt wird, um meine Pflanzen anzuzeigen.
-Erstelle hier eine Liste mit id, name, type, water_freq, water_countdown und water_countdown_color 
+Erstelle hier eine Liste mit id, name, type, water_freq, water_countdown_nr, water_countdown und water_countdown_color 
 für jede meiner Pflanzen, auf Basis der beiden json Datengrundlagen und der aktuellen Zeit.
 Die last_id in db_garden wird hier übersprungen, ist aber nötig (siehe actions.py).
 """
@@ -20,12 +21,13 @@ def generate_plants_info(db_plants, db_garden):
         water_freq = db_plants[plant["type"]]["water_freq"]
         curr_time = time.time()
         last_time = plant["last_water"]
-        water_countdown = int(round( water_freq-(curr_time-last_time)/60 ))
+        water_countdown_nr = int(round( water_freq-(curr_time-last_time)/60 ))
+
 
         # Einfärbung der Zeit nach Dringlichkeit des Giessens
-        if water_countdown > 0:
+        if water_countdown_nr > 0:
             water_countdown_color = "green"
-        elif water_countdown > -2:
+        elif water_countdown_nr > -2:
             water_countdown_color = "orange"
         else:
             water_countdown_color = "red"
@@ -36,10 +38,11 @@ def generate_plants_info(db_plants, db_garden):
         else:
             water_freq = str(water_freq) + " Minuten"
 
-        if water_countdown == 1 or water_countdown == -1:
-            water_countdown = str(water_countdown) + " Minute"
+        if water_countdown_nr == 1 or water_countdown_nr == -1:
+            water_countdown = str(water_countdown_nr) + " Minute"
         else:
-            water_countdown = str(water_countdown) + " Minuten"
+            water_countdown = str(water_countdown_nr) + " Minuten"
+
 
         # gewonnene Infos zur Liste hinzufügen, pro Pflanze
         plants_info.append({
@@ -47,11 +50,13 @@ def generate_plants_info(db_plants, db_garden):
             "name": plant["name"],
             "type": plant["type"],
             "water_freq": water_freq,
+            "water_countdown_nr": water_countdown_nr,
             "water_countdown": water_countdown,
             "water_countdown_color": water_countdown_color
         })
 
-    # plants_info.sort(key=lambda i: int(i['water_countdown']))
+    # Sortiere Pflanzen-Ansicht nach Giess-Dringlichkeit
+    plants_info.sort(key=lambda i: i['water_countdown_nr'])
 
     return plants_info
 

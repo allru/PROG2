@@ -2,24 +2,41 @@
 <html lang="de">
     <head>
         <meta charset="utf-8">
+
+        <!-- Set the page to the width of the device and set the zoon level -->
+        <meta name="viewport" content="width = device-width, initial-scale = 1">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
         <title>Meine Pflanzen</title>
+
+
+
     </head>
     <body>
-        <h1>Meine Pflanzen</h1>
+        <!-- container puts padding around itself. Bootstap grids require a container. -->
+        <div class="container">
+
+        <!-- page-header adds space aroundtext and enlarges it. It also adds an underline at the end -->
+        <div class="page-header">
+            <h1 style="color: #4a235a "><strong>Meine Pflanzen</strong></h1>
+        </div>
 
         {% for plant in plants_info %}
-        <div class="plant_div">
+        <div class="jumbotron">
             <form method="POST">
                 <table>
+
                     <tr>
                         <!-- for submitting the form on textbox or select changes: https://stackoverflow.com/questions/7231157/how-to-submit-form-on-change-of-dropdown-list !-->
-                        <td>Name:</td><td><input type="text" name="name" value="{{plant.name}}" onchange="this.form.submit()"></td>
+                        <td>Name:</td><td><input type="text" class="form-control" name="name" value="{{plant.name}}" onchange="this.form.submit()"></td>
                         <td>Bewässerungs Häufigkeit:</td><td>{{plant.water_freq}}</td>
                     </tr>
+
                     <tr>
                         <td>Typ:</td>
-                        <td><select name="type" style="width:100%" onchange="this.form.submit()">
+                        <td><select name="type" class="btn btn-light dropdown-toggle" onchange="this.form.submit()">
                             {% for type_option in type_select %}
                             <option value="{{type_option.id}}" {{"selected" if plant.type==type_option.id}} >{{type_option.name}}</option>
                             {% endfor %}
@@ -34,18 +51,20 @@
             <form method="POST" style="display:inline">
                 <input type="text" name="id" value="{{plant.id}}" hidden>
                 <input type="text" name="action" value="reset_water" hidden>
-                <button type="submit">Wurde bewässert!</button>
+                <button type="submit" class="btn btn-secondary">Wurde bewässert!</button>
             </form>
             <form method="POST" style="display:inline">
                 <input type="text" name="id" value="{{plant.id}}" hidden>
                 <input type="text" name="action" value="delete_plant" hidden>
-                <button type="submit">Pflanze löschen</button>
+                <button type="submit" class="btn btn-outline-secondary btn-xs">Pflanze löschen </button>
             </form>
         </div>
         {% endfor %}
         <form method="POST">
             <input type="text" name="action" value="add_plant" hidden>
-            <button type="submit">Pflanze hinzufügen</button>
+            <button type="submit" class="last_element btn btn-outline-secondary">Pflanze hinzufügen</button>
         </form>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     </body>
 </html>

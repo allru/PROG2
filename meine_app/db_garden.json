@@ -1,18 +1,28 @@
 {
-    "last_id": "6",
+    "last_id": "10",
     "0": {
-        "name": "Spargeli2",
-        "type": "10",
-        "last_water": 1624025517.5935628
+        "name": "Spargeli2568 Garten",
+        "type": "5",
+        "last_water": 1624110932.6724768
     },
     "4": {
-        "name": "Huhu",
-        "type": "4",
-        "last_water": 1624025213.4131804
+        "name": "Huhu Balkon",
+        "type": "9",
+        "last_water": 1624109734.8455207
     },
     "6": {
+        "name": "Ananas Wohnzimmer",
+        "type": "9",
+        "last_water": 1624110515.0773282
+    },
+    "9": {
         "name": "Neue Pflanze",
-        "type": "2",
-        "last_water": 1624031394.5831287
+        "type": "0",
+        "last_water": 1624111530.716661
+    },
+    "10": {
+        "name": "Neue Pflanze",
+        "type": "0",
+        "last_water": 1624111579.9150515
     }
 }
