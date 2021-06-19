@@ -1,7 +1,7 @@
 {
 	"0": {
-		"name": "Zierspargel",
-		"water_freq": 1},
+		"name": "Unbekannt",
+		"water_freq": 0},
 	"1": {
 		"name": "Tunichgunde", 
 		"water_freq": 7},
@@ -28,6 +28,8 @@
 		"water_freq": 3},
 	"9": {
 		"name": "Bananenbaum", 
+		"water_freq": 1},
+	"10": {
+		"name": "Zierspargel",
 		"water_freq": 1}
-
 }

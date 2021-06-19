@@ -10,27 +10,42 @@
 
         {% for plant in plants_info %}
         <div class="plant_div">
-            <table>
-                <tr>
-                    <td>Name:</td><td><input type="text" name="name" value="{{plant.name}}"></td>
-                    <td>Bewässerungs Häufigkeit:</td><td>{{plant.water_freq}}</td>
-                </tr>
-                <tr>
-                    <td>Typ:</td>
-                    <td><select name="type" style="width:100%">
-                        {% for type_option in type_select %}
-                        <option value="{{type_option}}" {{"selected" if plant.type==type_option}} >{{type_option}}</option>
-                        {% endfor %}
-                    </select></td>
-                    <td>Bewässerungs fällig in:</td><td style="color: {{plant.water_countdown_color}};">{{plant.water_countdown}}</td>
-                </tr>
-            </table>
-            <br>
-            <button type="button">Wurde bewässert!</button>
-            <button type="button">Pflanze löschen</button>
+            <form method="POST">
+                <table>
+                    <tr>
+                        <!-- for submitting the form on textbox or select changes: https://stackoverflow.com/questions/7231157/how-to-submit-form-on-change-of-dropdown-list !-->
+                        <td>Name:</td><td><input type="text" name="name" value="{{plant.name}}" onchange="this.form.submit()"></td>
+                        <td>Bewässerungs Häufigkeit:</td><td>{{plant.water_freq}}</td>
+                    </tr>
+                    <tr>
+                        <td>Typ:</td>
+                        <td><select name="type" style="width:100%" onchange="this.form.submit()">
+                            {% for type_option in type_select %}
+                            <option value="{{type_option.id}}" {{"selected" if plant.type==type_option.id}} >{{type_option.name}}</option>
+                            {% endfor %}
+                        </select></td>
+                        <td>Bewässerungs fällig in:</td><td style="color: {{plant.water_countdown_color}};">{{plant.water_countdown}}</td>
+                    </tr>
+                </table>
+                <br>
+                <input type="text" name="id" value="{{plant.id}}" hidden>
+                <input type="text" name="action" value="edit_plant" hidden>
+            </form>
+            <form method="POST" style="display:inline">
+                <input type="text" name="id" value="{{plant.id}}" hidden>
+                <input type="text" name="action" value="reset_water" hidden>
+                <button type="submit">Wurde bewässert!</button>
+            </form>
+            <form method="POST" style="display:inline">
+                <input type="text" name="id" value="{{plant.id}}" hidden>
+                <input type="text" name="action" value="delete_plant" hidden>
+                <button type="submit">Pflanze löschen</button>
+            </form>
         </div>
         {% endfor %}
-        <button type="button">Pflanze hinzufügen</button>
-
+        <form method="POST">
+            <input type="text" name="action" value="add_plant" hidden>
+            <button type="submit">Pflanze hinzufügen</button>
+        </form>
     </body>
 </html>
