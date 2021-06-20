@@ -17,7 +17,8 @@ def generate_plants_info(db_plants, db_garden):
         water_freq = db_plants[plant["type"]]["water_freq"]
         curr_time = time.time()
         last_time = plant["last_water"]
-        water_countdown_nr = int(round( water_freq-(curr_time-last_time)/60 ))
+        water_countdown_nr = int(round(water_freq-(curr_time-last_time)/60))
+        # für Tage int(round( water_freq-(curr_time-last_time)/60 /60/24))
 
 
         # Einfärbung der Zeit nach Dringlichkeit des Giessens
@@ -28,7 +29,7 @@ def generate_plants_info(db_plants, db_garden):
         else:
             water_countdown_color = "red"
 
-        # Anpassung Schreibweise Minuten Plural/Singular
+        # Anpassung Schreibweise Minuten Plural/Singular, hier ersetzbar durch Tage
         if water_freq == 1 or water_freq == -1:
             water_freq = str(water_freq) + " Minute"
         else:

@@ -3,8 +3,8 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from meine_app.libs.generator import generate_plants_info, generate_type_select
-from meine_app.libs.actions import edit_garden
-from meine_app.libs.actions import edit_type
+from meine_app.libs.actions import edit_garden, edit_type
+
 
 app = Flask("Meine Pflanzen")
 
@@ -12,7 +12,8 @@ app = Flask("Meine Pflanzen")
 @app.route('/', methods=['GET', 'POST'])
 def index():
 
-    # Daten einlesen, 1x alle möglichen Pflanzen (db_plants, ohne last_id), 1x meine Pflanzen (db_garden)
+    # alle möglichen Pflanzen (db_plants) und meine Pflanzen (db_garden) einlesen
+    # last_id trennen wegen Konflikten
     db_plants = json.load(open(r"data/db_plants.json", "r", encoding='utf-8'))
     db_plants_last_id = db_plants.pop('last_id')
 
@@ -25,7 +26,7 @@ def index():
 
     print(db_garden)
 
-    # generieren der Pflanzeninfos, die mit HTML auf der Webseite angezeigt werden sollen
+    # generieren der Pflanzeninfos, die auf der Webseite angezeigt werden sollen
     plants_info = generate_plants_info(db_plants, db_garden)
     type_select = generate_type_select(db_plants)
 
@@ -35,7 +36,6 @@ def index():
 
 @app.route('/typen-verwalten', methods=['GET', 'POST'])
 def typen_verwalten():
-    # db_plants mit last_id
     db_plants = json.load(open(r"data/db_plants.json", "r", encoding='utf-8'))
     db_plants_last_id = db_plants.pop('last_id')
 

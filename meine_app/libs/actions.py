@@ -2,11 +2,10 @@ import time
 import json
 
 """
-Wird aufgerufen, wenn der Nutzer etwas an den eigenen Pflanzen ändert (Name, Typ, Giess-Status 
-zurücksetzen, Pflanze löschen odedr neue Pflanze hinzufügen). Diese Änderungen werden in db-garden 
-aktualisiert und gespeichert. Damit bekannt ist, welche der Pflanzen genau gändert werden muss, ist 
-die ID der eigenen Pflanze immer im Formular enthalten. Das Formularfeld "action" beschreibt welche
-Aktion der Benutzer angefordert hat.
+Wird aufgerufen, wenn der Nutzer etwas an den eigenen Pflanzen oder an den verfügbaren Pflanzentypen 
+ändert. Diese Änderungen werden in db-garden aktualisiert und gespeichert. Damit bekannt ist, welche 
+der Pflanzen oder Typen genau gändert werden muss, ist eine ID immer im Formular enthalten. 
+Das Formularfeld "action" beschreibt welche Aktion der Benutzer angefordert hat.
 """
 def edit_garden(request, db_garden, db_garden_last_id):
     # Pflanzen-Name oder -Typ ändern
@@ -23,8 +22,7 @@ def edit_garden(request, db_garden, db_garden_last_id):
         db_garden[request.form['id']]["last_water"] = time.time()
 
     # neue Pflanze hinzufügen mit anpassbarem default Inhalt
-    # bekommt die nächstgrössere ID (last_id +1) aus allen aktuellen Pflanzen, damit es keine
-    # Konflikte gibt und speichert diese als last_id
+    # bekommt die nächstgrössere ID (last_id +1) aus allen aktuellen Pflanzen speichert diese als last_id
     elif request.form["action"] == "add_plant":
         id_new_plant = str(int(db_garden_last_id) + 1)
         db_garden[id_new_plant] = {"name": "Neue Pflanze",
@@ -60,7 +58,7 @@ def edit_type(request, db_plants, db_plants_last_id):
                                         }
         db_plants_last_id = id_new_type
 
-    # Speichern der Änderungen im db_plants json-File
+    # Speichern der Änderungen im db_plants json-File, inkl. last_id
     with open('data/db_plants.json', 'w') as open_file:
         db_plants_json = db_plants.copy()
         db_plants_json['last_id'] = db_plants_last_id
