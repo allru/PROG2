@@ -1,18 +1,14 @@
 import time
-import re
 
 """
 Generieren der plant-info, die in HTML genutzt wird, um meine Pflanzen anzuzeigen.
 Erstelle hier eine Liste mit id, name, type, water_freq, water_countdown_nr, water_countdown und water_countdown_color 
 für jede meiner Pflanzen, auf Basis der beiden json Datengrundlagen und der aktuellen Zeit.
-Die last_id in db_garden wird hier übersprungen, ist aber nötig (siehe actions.py).
 """
 def generate_plants_info(db_plants, db_garden):
     plants_info = []
 
     for plant_key in db_garden.keys():
-        if plant_key == "last_id":
-            continue
         plant = db_garden[plant_key]
 
         # Berechne Zeit (in Minuten) bis zum nächsten empfohlenen Giesszeitpunkt aufgrund der

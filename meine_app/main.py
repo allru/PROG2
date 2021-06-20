@@ -13,18 +13,21 @@ app = Flask("Meine Pflanzen")
 def index():
 
     # Daten einlesen, 1x alle möglichen Pflanzen (db_plants, ohne last_id), 1x meine Pflanzen (db_garden)
-    db_plants_info = json.load(open(r"data/db_plants.json", "r", encoding='utf-8'))
-    db_plants = db_plants_info
-    db_plants.pop('last_id')
+    db_plants = json.load(open(r"data/db_plants.json", "r", encoding='utf-8'))
+    db_plants_last_id = db_plants.pop('last_id')
+
     db_garden = json.load(open(r"data/db_garden.json", "r", encoding='utf-8'))
+    db_garden_last_id = db_garden.pop('last_id')
+
+    # wenn etwas an meinen Pflanzen geändert wurde, aktualisiert sich db_garden
+    if request.method == 'POST':
+        edit_garden(request, db_garden, db_garden_last_id)
+
+    print(db_garden)
 
     # generieren der Pflanzeninfos, die mit HTML auf der Webseite angezeigt werden sollen
     plants_info = generate_plants_info(db_plants, db_garden)
     type_select = generate_type_select(db_plants)
-
-    # wenn etwas an meinen Pflanzen geändert wurde, aktualisiert sich db_garden
-    if request.method == 'POST':
-        edit_garden(request, db_garden)
 
     # Jinja Code im HTML auswerten und an Webseite übermitteln
     return render_template('index.html', plants_info=plants_info, type_select=type_select)
@@ -33,13 +36,11 @@ def index():
 @app.route('/typen-verwalten', methods=['GET', 'POST'])
 def typen_verwalten():
     # db_plants mit last_id
-    db_plants_info = json.load(open(r"data/db_plants.json", "r", encoding='utf-8'))
+    db_plants = json.load(open(r"data/db_plants.json", "r", encoding='utf-8'))
+    db_plants_last_id = db_plants.pop('last_id')
 
     if request.method == 'POST':
-        edit_type(request, db_plants_info)
-
-    db_plants = db_plants_info
-    db_plants.pop('last_id')
+        edit_type(request, db_plants, db_plants_last_id)
 
     return render_template('typen-verwalten.html', db_plants=db_plants)
 
