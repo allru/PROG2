@@ -40,7 +40,8 @@ Es beinhaltet default Angaben, die aber wie weiter oben beschrieben, modifizierb
 
 "Typen verwalten" (8) führt zur Seite "Alle Pflanzen-Typen".
 
-![Hauptseite](meine_app/doku/Seitenuebersicht.png)
+
+![Hauptseite](meine_app/doku/Seitenuebersicht.PNG)
 
 
 Bei Bedarf können die in 2 aufgelisteten Typen auf dieser "Alle Pflanzen-Typen" Nebenseite verwaltet werden.
