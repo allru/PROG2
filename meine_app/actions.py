@@ -36,3 +36,28 @@ def edit_garden(request, db_garden):
     with open('db_garden.json', 'w') as open_file:
         json_als_string = json.dumps(db_garden, indent=4)
         open_file.write(json_als_string)
+
+def edit_type(request, db_plants_info):
+    # Typ-Name oder Giesshäufigkeit ändern
+    if request.form["action"] == "edit_type":
+        db_plants_info[request.form["id"]]["name"] = request.form['name']
+        db_plants_info[request.form["id"]]["water_freq"] = int(request.form['water_freq'])
+
+    # Pflanze löschen
+    elif request.form["action"] == "delete_type":
+        db_plants_info.pop(request.form["id"])
+
+    # neuen Typ hinzufügen mit anpassbarem default Inhalt
+    # bekommt die nächstgrössere ID (last_id +1) aus allen aktuellen Typen, damit es keine
+    # Konflikte gibt und speichert diese als last_id
+    elif request.form["action"] == "add_type":
+        id_new_type = str(int(db_plants_info["last_id"]) + 1)
+        db_plants_info[id_new_type] = {"name": "Neuer Typ",
+                                        "water_freq": 0,
+                                        }
+        db_plants_info["last_id"] = id_new_type
+
+    # Speichern der Änderungen im db_plants json-File
+    with open('db_plants.json', 'w') as open_file:
+        json_als_string = json.dumps(db_plants_info, indent=4)
+        open_file.write(json_als_string)
