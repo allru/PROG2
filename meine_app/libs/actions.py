@@ -33,7 +33,7 @@ def edit_garden(request, db_garden):
         db_garden["last_id"] = id_new_plant
 
     # Speichern der Änderungen im db_garden json-File
-    with open('db_garden.json', 'w') as open_file:
+    with open('data/db_garden.json', 'w') as open_file:
         json_als_string = json.dumps(db_garden, indent=4)
         open_file.write(json_als_string)
 
@@ -58,6 +58,6 @@ def edit_type(request, db_plants_info):
         db_plants_info["last_id"] = id_new_type
 
     # Speichern der Änderungen im db_plants json-File
-    with open('db_plants.json', 'w') as open_file:
+    with open('data/db_plants.json', 'w') as open_file:
         json_als_string = json.dumps(db_plants_info, indent=4)
         open_file.write(json_als_string)
